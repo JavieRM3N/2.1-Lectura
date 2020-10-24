@@ -22,10 +22,14 @@
 -----
 1.1. Lectura previa
 1.1.1. Características generales de la arquitectura ARM
-ARM es una arquitectura RISC (Reduced Instruction Set Computer=Ordenado con Conjunto Reducido de Instrucciones) de 32 bits, salvo la versión del core ARMv8-A que es mixta 32/64 bits (bus de 32 bits con registros de 64 bits). 
+ARM es una arquitectura RISC (Reduced Instruction Set Computer=Ordenado con Conjunto Reducido de Instrucciones) de 32 bits, salvo la versión del core ARMv8-A que es mixta 32/64 bits (bus de 32 bits con registros de 64 bits).
+
 El chip en concreto que lleva la Raspberry Pi es el BCM2835, se trata de un SoC (System on a Chip=Sistema en un sólo chip) que contiene además de la CPU otros elementos como un núcleo GPU (hardware acelerado OpenGL ES/OpenVG/Open EGL/OpenMAX y decodificación H.264 por hardware) y un núcleo DSP (Digital signal processing=Procesamiento digital de señales) que es un procesador más pequeño y simple que el principal, pero especializado en el procesado y representación de señales analógicas. 
+
 Las extensiones de la arquitectura ARMv6k frente a la básica ARMv6 son mínimas mas por lo que a efectos prácticos trabajaremos con la arquitectura ARMv6.
+
 Registros
+
 La arquitectura ARMv6 presenta un conjunto de 17 registros (16 principales más uno de estado) de 32 bits cada uno.
 Registros Generales. Su función es el almacenamiento temporal de datos. Son los 13 registros que van R0 hasta R12.
 Registros Especiales. Son los últimos 3 registros principales: R13, R14 y R15.
