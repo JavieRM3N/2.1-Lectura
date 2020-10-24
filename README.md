@@ -28,7 +28,7 @@ El chip en concreto que lleva la Raspberry Pi es el BCM2835, se trata de un SoC 
 
 Las extensiones de la arquitectura ARMv6k frente a la básica ARMv6 son mínimas mas por lo que a efectos prácticos trabajaremos con la arquitectura ARMv6.
 
-**Registros
+**Registros**
 
 La arquitectura ARMv6 presenta un conjunto de 17 registros (16 principales más uno de estado) de 32 bits cada uno.
 
@@ -47,21 +47,21 @@ Como son de propósito especial, tienen nombres alternativos.
 
 Desde el Modo Usuario sólo podemos acceder a las banderas condicionales, que contienen información sobre el estado de la última operación realizada por la ALU. A diferencia de otras arquitecturas en ARMv6 podemos elegir si queremos que una instrucción actualice o no las banderas condicionales, poniendo una “s” detrás del nemotécnico 2. Existen 4 banderas y son las siguientes:
 
-*N. Se activa cuando el resultado es negativo.
+*N*. Se activa cuando el resultado es negativo.
 
-*Z. Se activa cuando el resultado es cero o una comparación es cierta.
+*Z*. Se activa cuando el resultado es cero o una comparación es cierta.
 
-*C. Indica acarreo en las operaciones aritméticas.
+*C*. Indica acarreo en las operaciones aritméticas.
 
-*V. Desbordamiento aritmético.
+*V*. Desbordamiento aritmético.
 
-**Esquema de almacenamiento
+**Esquema de almacenamiento**
 
 El procesador es Bi-Endian, quiere decir que es configurable entre Big Endian y Little Endian. Aunque nuestro sistema operativo nos lo limita a Little Endian. Por tanto la regla que sigue es “el byte menos significativo ocupa la posición más baja”. Cuando escribimos un dato en una posición de memoria, dependiendo de si es byte, half word o word,... se ubica en memoria.
 
 La dirección de un dato es la de su byte menos significativo. La memoria siempre se referencia a nivel de byte, es decir si decimos la posición N nos estamos refiriendo al byte N-ésimo, aunque se escriba media palabra, una palabra,... 
 
-**1.1.2. El lenguaje ensamblador
+**1.1.2. El lenguaje ensamblador**
 
 El ensamblador es un lenguaje de bajo nivel que permite un control directo de la CPU y todos los elementos asociados. Cada línea de un programa ensamblador consta de una instrucción del procesador y la posición que ocupan los datos de esa instrucción.
 
@@ -79,40 +79,40 @@ Generalmente, y dado que crear programas un poco extensos es laborioso, el ensam
 
 La principal característica de un módulo fuente en ensamblador es que existe una clara separación entre las instrucciones y los datos. La estructura más general de un módulo fuente es: 
 
-* Sección de datos. Viene identificada por la directiva .data. En esta zona se definen todas las variables que utiliza el programa con el objeto de reservar memoria para contener los valores asignados. Hay que tener especial cuidado para que los datos estén alineados en palabras de 4 bytes, sobre todo después de las cadenas. Alinear significa rellenar con ceros el final de un dato para que el siguiente dato comience en una dirección múltiplo de 4 (con los dos bits menos significativos a cero). Los datos son modificables. 
+1.Sección de datos. Viene identificada por la directiva .data. En esta zona se definen todas las variables que utiliza el programa con el objeto de reservar memoria para contener los valores asignados. Hay que tener especial cuidado para que los datos estén alineados en palabras de 4 bytes, sobre todo después de las cadenas. Alinear significa rellenar con ceros el final de un dato para que el siguiente dato comience en una dirección múltiplo de 4 (con los dos bits menos significativos a cero). Los datos son modificables. 
 
-* Sección de código. Se indica con la directiva .text, y sólo puede contener código o datos no modificables. Como todas las instrucciones son de 32 bits no hay que tener especial cuidado en que estén alineadas. Si tratamos de escribir en esta zona el ensamblador nos mostrará un mensaje de error. 
+2.Sección de código. Se indica con la directiva .text, y sólo puede contener código o datos no modificables. Como todas las instrucciones son de 32 bits no hay que tener especial cuidado en que estén alineadas. Si tratamos de escribir en esta zona el ensamblador nos mostrará un mensaje de error. 
 De estas dos secciones la única que obligatoriamente debe existir es la sección .text (o sección de código).  Un módulo fuente, como el del ejemplo, está formado por instrucciones, datos, símbolos y directivas. Las instrucciones son representaciones nemotécnicas del juego de instrucciones del procesador. Un dato es una entidad que aporta un valor numérico, que puede expresarse en distintas bases o incluso a través de una cadena. 
 
 Los símbolos son representaciones abstractas que el ensamblador maneja en tiempo de ensamblado pero que en el código binario resultante tendrá un valor numérico concreto. Hay tres tipos de símbolos: las etiquetas, las macros y las constantes simbólicas. Por último tenemos las directivas, que sirven para indicarle ciertas cosas al ensamblador, como delimitar secciones, insertar datos, crear macros, constantes simbólicas, etc... Las instrucciones se aplican en tiempo de ejecución mientras que las directivas se aplican en tiempo de ensamblado. 
 
-**Datos 
+**Datos**
 
 Los datos se pueden representar de distintas maneras. Para representar números tenemos 4 bases. La más habitual es en su forma decimal, la cual no lleva ningún delimitador especial. Luego tenemos otra muy útil que es la representación hexadecimal, que indicaremos con el prefijo 0x. Otra interesante es la binaria, que emplea el prefijo 0b antes del número en binario. La cuarta y última base es la octal, que usaremos en raras ocasiones y se especifica con el prefijo 0. Sí, un cero a la izquierda de cualquier valor convierte en octal dicho número. Por ejemplo 015 equivale a 13 en decimal. Todas estas bases pueden ir con un signo menos delante, codificando el valor negativo en complemento a dos. Para representar carácteres y cadenas emplearemos las comillas simples y las comillas dobles respectivamente.
 
-**Símbolos.
+**Símbolos.**
 
 Como las etiquetas se pueden ubicar tanto en la sección de datos como en la de código, la versatilidad que nos dan las mismas es enorme. En la zona de datos, las etiquetas pueden representar variables, constantes y cadenas. En la zona de código podemos usar etiquetas de salto, funciones y punteros a zona de datos. 
 Las macros y las constantes simbólicas son símbolos cuyo ámbito pertenece al preprocesador, a diferencia de las etiquetas que pertenecen al del ensamblador. Se especifican con las directivas .macro y .equ respectivamente y permiten que el código sea más legible y menos repetitivo.
 
-**2.1. Lectura previa 
+**2.1. Lectura previa **
 
 
-**2.1.1. Modos de direccionamiento del ARM 
+**2.1.1. Modos de direccionamiento del ARM** 
 
 En la arquitectura ARM los accesos a memoria se hacen mediante instrucciones específicas ldr y str (luego veremos las variantes ldm, stm y las preprocesadas push y pop). El resto de instrucciones toman operandos desde registros o valores inmediatos, sin excepciones. En este caso la arquitectura nos fuerza a que trabajemos de un modo determinado: primero cargamos los registros desde memoria, luego procesamos el valor de estos registros con el amplio abanico de instrucciones del ARM, para finalmente volcar los resultados desde registros a memoria. 
 
 Existen otras arquitecturas como la Intel x86, donde las instrucciones de procesado nos permiten leer o escribir directamente de memoria. Ningún método es mejor que otro, todo es cuestión de diseño. Normalmente se opta por direccionamiento a memoria en instrucciones de procesado en arquitecturas con un número reducido de registros, donde se emplea la memoria como almacén temporal. En nuestro caso disponemos de suficientes registros, por lo que podemos hacer el procesamiento sin necesidad de interactuar con la memoria, lo que por otro lado también es más rápido.
 
-*Direccionamiento inmediato. El operando fuente es una constante, formando parte de la instrucción.
+1.Direccionamiento inmediato. El operando fuente es una constante, formando parte de la instrucción.
 
-*Direccionamiento inmediato con desplazamiento o rotación. Es una variante del anterior en la cual se permiten operaciones intermedias sobre los registros. Mo
+1.Direccionamiento inmediato con desplazamiento o rotación. Es una variante del anterior en la cual se permiten operaciones intermedias sobre los registros. Mo
 
-*Direccionamiento a memoria, sin actualizar registro puntero. Es la forma más sencilla y admite 4 variantes. Después del acceso a memoria ningún registro implicado en el cálculo de la dirección se modifica
+1.Direccionamiento a memoria, sin actualizar registro puntero. Es la forma más sencilla y admite 4 variantes. Después del acceso a memoria ningún registro implicado en el cálculo de la dirección se modifica
 
-*Direccionamiento a memoria, actualizando registro puntero. En este modo de direccionamiento, el registro que genera la dirección se actualiza con la propia dirección. De esta forma podemos recorrer un array con un sólo registro sin necesidad de hacer el incremento del puntero en una instrucción aparte. Hay dos métodos de actualizar dicho registro, antes de ejecutar la instrucción (preindexado) o después de la misma (postindexado). 
+1.Direccionamiento a memoria, actualizando registro puntero. En este modo de direccionamiento, el registro que genera la dirección se actualiza con la propia dirección. De esta forma podemos recorrer un array con un sólo registro sin necesidad de hacer el incremento del puntero en una instrucción aparte. Hay dos métodos de actualizar dicho registro, antes de ejecutar la instrucción (preindexado) o después de la misma (postindexado). 
 
-**2.1.2. Tipos de datos 
+**2.1.2. Tipos de datos**
 
 Tipos de datos básicos. 
 
